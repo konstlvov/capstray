@@ -9,6 +9,7 @@
 
 HHOOK	g_CapsKeyboardHook;
 HWND g_hWnd;
+UINT g_uTaskbarCreatedMsg;
 
 #include <sstream>
 
@@ -73,6 +74,7 @@ void CView::OnCreate( void ) {
 	// WM_CREATE message received.
 	// Tasks such as setting the icon, creating child windows, or anything
 	// associated with creating windows are normally performed here.
+	g_uTaskbarCreatedMsg = RegisterWindowMessageW(L"TaskbarCreated");
 	::SetTimer( this->GetHwnd(), TIMER_ID, TIMER_TIMEOUT_MS, NULL );
 	g_hWnd = m_hWnd;
 	g_CapsKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KbdHook, GetModuleHandle(0), 0);
@@ -147,6 +149,10 @@ LRESULT CView::WndProc( UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 	// This function is our message procedure. We process the messages for
 	// the view window here.  Unprocessed messages are passed on for
 	// default processing.
+	if (uMsg == g_uTaskbarCreatedMsg) {
+		NotifyIcon(NIM_ADD, m_capsState, false);
+		return 0;
+	}
 	switch ( uMsg ) {
 		case WM_TIMER:
 			OnTimer();
