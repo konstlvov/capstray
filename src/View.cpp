@@ -85,12 +85,14 @@ void CView::OnCreate( void ) {
 void CView::OnAbout( void ) {
 	std::wstringstream oss;
 	oss << _T( "CapsTray, by Ron Wilson (c) 2010"
-			"\nEnhanced by Konstantin Lvov (konstlvov@github :) (c) 2023"
-			"\nRelease 2023-07-26"
+			"\nEnhanced by Konstantin Lvov (konstlvov@github :) (c) 2023-2026"
 			"\n"
 			"\nWhat's new"
 			"\nRelease 2023-07-26:"
 			"\n  * WM_TIMER handling restored"
+    		"\nRelease 2026-09-19:"
+			"\n  * Restore tray icon after explorer.exe crash / restart"
+
 			) << std::endl;
 	MessageBox( oss.str().c_str(), _T( "About CapsTray" ), MB_OK | MB_ICONINFORMATION );
 }
